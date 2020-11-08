@@ -43,6 +43,33 @@ docker-compose exec php sh
 ./vendor/bin/drush
 ```
 
+## Importer et exporter la configuration de Drupal
+
+Préalablement, modifiez la dernière ligne du fichier settings php:
+
+```
+sudo nano ./web/sites/default/settings.php
+```
+
+Et remplacer la valeur de $settings['config_sync_directory'] par $settings['config_sync_directory'] = '../config/sync';
+
+### Pour exporter la configuration
+
+```
+docker-compose exec php sh
+./vendor/bin/drush cex
+exit
+```
+
+### Pour importer la configuration
+
+```
+docker-compose exec php sh
+./vendor/bin/drush cim
+exit
+```
+ 
+
 ## Tout supprimer et nettoyer
 
 Attention! | Attention, ceci aura pour effet de détruire l'ensemble des images et container docker (y compris des autres projets).
