@@ -49,11 +49,11 @@ docker-compose exec php sh
 
 1. Remplacer le fichier suivant depuis la racine:
 
-```development.services.yml => web/sites/development.services.yml```
+```./settings/development.services.yml => web/sites/development.services.yml```
 
 2. Copier le fichier suivant depuis la racine:
 
-```settings.local.php => web/sites/default/settings.local.php```
+```./settings/settings.local.php => web/sites/default/settings.local.php```
 
 3. Retirer les commentaires à la fin du fichier ```web/sites/default/settings.php```
 
