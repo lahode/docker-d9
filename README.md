@@ -43,6 +43,55 @@ docker-compose exec php sh
 ./vendor/bin/drush
 ```
 
+## Gérer le cache
+
+### Désactiver le cache pour le développement
+
+1. Remplacer le fichier suivant depuis la racine:
+
+```./settings/development.services.yml => web/sites/development.services.yml```
+
+2. Copier le fichier suivant depuis la racine:
+
+```./settings/settings.local.php => web/sites/default/settings.local.php```
+
+3. Retirer les commentaires à la fin du fichier ```web/sites/default/settings.php```
+
+```
+if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
+  include $app_root . '/' . $site_path . '/settings.local.php';
+}
+```
+
+### Vider le cache avec Drush
+
+```
+./vendor/bin/drush cr
+```
+
+## Importer et exporter la configuration de Drupal
+
+Préalablement, modifiez la dernière ligne du fichier settings.php:
+
+```
+sudo nano ./web/sites/default/settings.php
+```
+
+Et remplacer la valeur de ```$settings['config_sync_directory']``` par ```$settings['config_sync_directory'] = '../config/sync';```
+
+### Exporter la configuration
+
+```
+./vendor/bin/drush cex
+```
+
+### Importer la configuration
+
+```
+./vendor/bin/drush cim
+```
+ 
+
 ## Tout supprimer et nettoyer
 
 Attention! | Attention, ceci aura pour effet de détruire l'ensemble des images et container docker (y compris des autres projets).
