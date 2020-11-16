@@ -91,6 +91,19 @@ Et remplacer la valeur de ```$settings['config_sync_directory']``` par ```$setti
 ./vendor/bin/drush cim
 ```
  
+## Sauvegarder l'ensemble de votre projet sur un nouveau repository
+
+1. Allez à la racine de votre projet et supprimer le dossier .git : ```rm -rf .git```
+2. Connectez-vous à docker : ```docker-compose exec php sh```
+3. Faite une sauvegarde de la base de données à la racine du projet : ```./vendor/bin/drush sql-dump > ./sauvegarde-db-20201116.sql```
+4. Exportez les fichier de configuration : ```./vendor/bin/drush cex```
+5. Sortez de docker : ```exit```
+6. Sauvegarder vos fichiers média : ```tar czvf files.tar.gz htdocs/sites/default/files```
+7. Créez un nouveau repository git : ```git init```
+8. Ajouter l'ensemble de vos fichier : ```git add .```
+9. Committez l'ensemble pour créer un nouvel historique sur votre machine : ```git commit -m "Mon projet Drupal"```
+10. Allez sur votre compte GitHub.com et créer un nouveau projet (mettez simplement un nom, sans accent ni espace dans Repository name et laisser le reste par défaut)
+11. Tapez les instructions indiquées dans la rubrique "…or push an existing repository from the command line", soit les 3 lignes (git remote, branch et push) sur votre terminal (toujours à la racine de votre projet)
 
 ## Tout supprimer et nettoyer
 
