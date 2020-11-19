@@ -14,6 +14,16 @@ Si un message tel que celui-ci apparaît: PHP Fatal error:  Allowed memory size 
 php -d memory_limit=-1 composer.phar install 
 ```
 
+## Configurez votre environnement
+
+Avant de lancer le docker, configurer les variables d'environnement de votre projet dans le fichier .env, soit:
+
+- PROJECT_NAME
+- PROJECT_BASE_URL
+- PROJECT_PORT
+
+Cela vous permettra notamment de lancer plusieurs projets à la fois
+
 ## Lancer le container Drupal
 
 ```
@@ -47,15 +57,13 @@ docker-compose exec php sh
 
 ### Désactiver le cache pour le développement
 
-1. Remplacer le fichier suivant depuis la racine:
+1. Copier les fichiers suivants depuis la racine vers les dossiers suivants:
 
-```./settings/development.services.yml => web/sites/development.services.yml```
+```./settings/dev.services.yml => ./web/sites/dev.services.yml```
 
-2. Copier le fichier suivant depuis la racine:
+```./settings/settings.local.php => ./web/sites/default/settings.local.php```
 
-```./settings/settings.local.php => web/sites/default/settings.local.php```
-
-3. Retirer les commentaires à la fin du fichier ```web/sites/default/settings.php```
+2. Retirer les commentaires (#) à la fin du fichier /web/sites/default/settings.php
 
 ```
 if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
@@ -98,7 +106,7 @@ Et remplacer la valeur de ```$settings['config_sync_directory']``` par ```$setti
 3. Faite une sauvegarde de la base de données à la racine du projet : ```./vendor/bin/drush sql-dump > ./sauvegarde-db-20201116.sql```
 4. Exportez les fichier de configuration : ```./vendor/bin/drush cex```
 5. Sortez de docker : ```exit```
-6. Sauvegarder vos fichiers média : ```tar czvf files.tar.gz htdocs/sites/default/files```
+6. Sauvegarder vos fichiers média : ```tar czvf files.tar.gz web/sites/default/files```
 7. Créez un nouveau repository git : ```git init```
 8. Ajouter l'ensemble de vos fichier : ```git add .```
 9. Committez l'ensemble pour créer un nouvel historique sur votre machine : ```git commit -m "Mon projet Drupal"```
@@ -122,4 +130,3 @@ docker-compose exec php sh
 ./vendor/bin/drush sql-dump > ./backup/dump-$(date +'%Y%m%d-%T').sql
 exit
 ```
-

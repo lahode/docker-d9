@@ -116,4 +116,4 @@ $settings['skip_permissions_hardening'] = TRUE;
 
 $settings['cache']['bins']['page'] = 'cache.backend.null';
 
-$settings['container_yamls'][] = DRUPAL_ROOT . '/sites/development.services.yml';
+$settings['container_yamls'][] = DRUPAL_ROOT . '/sites/dev.services.yml';
