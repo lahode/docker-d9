@@ -23,12 +23,18 @@ Cette étape est indispensable si vous souhaitez l'utiliser plus d'une fois sur 
 - PROJECT_BASE_URL
 - PROJECT_PORT
 
-Il est essentiel que les noms des containers (basé sur PROJECT_NAME) et que le numéro de port configuré (PROJECT_PORT) ne soit pas déjà utilisé par un autre projet. De préférence, utilisez un numéro de port supérieur à 1000 en [évitant ceux communément utilisé](https://fr.wikipedia.org/wiki/Port_(logiciel)#:~:text=les%20num%C3%A9ros%20de%20port%20de,)%2C%20assign%C3%A9s%20par%20l'IANA).
+Il est essentiel que les noms des containers (basé sur PROJECT_NAME) et que le numéro de port configuré (PROJECT_PORT) ne soit pas déjà utilisé par un autre projet. De préférence, utilisez un numéro de port supérieur à 1000 en [évitant ceux communément utilisé](https://fr.wikipedia.org/wiki/Port_(logiciel)).
 
 ### 3. Lancer le container Docker
 
 ```
 docker-compose up -d
+```
+
+Si vous obtenez une erreur (notamment sur Linux), il se peut que vous n'ayez pas les bons droits, utilisez donc la commande sudo.
+
+```
+sudo docker-compose up -d
 ```
 
 ### 4. Connectez-vous à votre docker
@@ -61,42 +67,36 @@ Par défaut, les valeurs sont:
 http://drupal.localhost:8000
 ```
 
-2. Dès lors vous devriez accéder à l'écran d'installation de Drupal. Suivez le formulaire d'installation.
+2. Dès lors, vous devriez accéder à l'écran d'installation de Drupal. Suivez le formulaire d'installation.
 
-3. Lorsque vous devez insérer les accès vers la base de données, utilisez ceux indiquer dans le fichier .env: DB_NAME, DB_USER, DB_PASSWORD, DB_HOST
+3. Lorsque vous devez insérer les accès vers la base de données, utilisez ceux indiqués dans le fichier .env: DB_NAME, DB_USER, DB_PASSWORD, DB_HOST
 
 Par défaut, utilisez les informations suivantes:
 
 ![Alt text](install-drupal.png?raw=true "Configuration de la base de données")
 
 
-## Ce qu'il faut retenir pour Docker
+## Quelques configurations utiles avant de commencer
 
-Lorsque vous utilisez une commande "composer" ou "drush", il vous faut préalablement accéder à votre docker en SSH en utilisant la commande suivante:
+### Créer un dossier backup à la racine
 
-```
-docker-compose exec php sh
-```
-
-Pour quitter votre connexion SSH, tapez:
+Ce dossier sera utile pour conserver vos sauvegarde de base de données et des médias.
 
 ```
-exit
+mkdir backup
 ```
 
-## Installation d'un un module ou un theme avec composer
+N.B. Pour information: Pour des raisons de confidentialité, il est recommandé de ne pas pousser dans le repository vos dump de base de données et autres fichiers liés à votre contenu. C'est pour cette raison que /backup a été rajouté dans le fichier .gitignore à la racine de votre projet.
+
+### Modifier le chemin où sont stockés les fichiers de configuration
+
+Modifiez la dernière ligne du fichier de configuration "settings.php":
 
 ```
-php composer.phar require drupal/[modulename_or_themename]
+sudo nano ./web/sites/default/settings.php
 ```
 
-## Utilisez drush
-
-```
-./vendor/bin/drush
-```
-
-## Gérer le cache
+Et remplacer la valeur de ```$settings['config_sync_directory']``` par ```$settings['config_sync_directory'] = '../config/sync';```
 
 ### Désactiver le cache pour le développement
 
@@ -114,21 +114,67 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 }
 ```
 
+
+## Ce qu'il faut retenir pour Docker
+
+Lorsque vous utilisez une commande "composer" ou "drush", il vous faut préalablement accéder à votre docker en SSH en utilisant la commande suivante:
+
+```
+docker-compose exec php sh
+```
+
+Pour quitter votre connexion SSH, tapez:
+
+```
+exit
+```
+
+
+## Utilisez composer
+
+Composer est le gestionnaire de dépendances par défaut de PHP (comme npm l'est pour Javascript).
+On l'utilise pour Drupal, notamment pour:
+
+1. Installer Drupal
+
+```
+php composer.phar install
+```
+
+2. Mettre à jour Drupal
+
+```
+php composer.phar update
+```
+
+3. Installer un nouveau module ou un theme de la communauté
+(nomdumodule ou nomdutheme est le nom que vous trouvez dans l'url après https://www.drupal.org/project/. Exemple: Pour le module (token)[https://www.drupal.org/project/token], le nomdumodule est tout simplement: token)
+
+```
+php composer.phar require drupal/[nomdumodule_ou_nomdutheme]
+```
+
+4. Désinstaller un nouveau module ou un theme de la communauté
+(Attention à le désinstaller préalablement dans l'administration du site Drupal)
+
+```
+php composer.phar remove drupal/[nomdumodule_ou_nomdutheme]
+```
+
+
+## Utilisez drush
+
+Drush est un des outils CLI par défaut pour Drupal. Celui-ci se trouve dans le dossier /vendor/bin de votre projet et est installé par également par composer.
+
+```
+./vendor/bin/drush
+```
+
 ### Vider le cache avec Drush
 
 ```
 ./vendor/bin/drush cr
 ```
-
-## Importer et exporter la configuration de Drupal
-
-Préalablement, modifiez la dernière ligne du fichier settings.php:
-
-```
-sudo nano ./web/sites/default/settings.php
-```
-
-Et remplacer la valeur de ```$settings['config_sync_directory']``` par ```$settings['config_sync_directory'] = '../config/sync';```
 
 ### Exporter la configuration
 
@@ -155,6 +201,7 @@ Et remplacer la valeur de ```$settings['config_sync_directory']``` par ```$setti
 9. Committez l'ensemble pour créer un nouvel historique sur votre machine : ```git commit -m "Mon projet Drupal"```
 10. Allez sur votre compte GitHub.com et créer un nouveau projet (mettez simplement un nom, sans accent ni espace dans Repository name et laisser le reste par défaut)
 11. Tapez les instructions indiquées dans la rubrique "…or push an existing repository from the command line", soit les 3 lignes (git remote, branch et push) sur votre terminal (toujours à la racine de votre projet)
+
 
 ## Tout supprimer et nettoyer
 
