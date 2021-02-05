@@ -117,9 +117,13 @@ Et remplacer la valeur de ```$settings['config_sync_directory']``` par ```$setti
 
 1. Copier les fichiers suivants depuis la racine vers les dossiers suivants:
 
-```cp ./settings/dev.services.yml ./web/sites/dev.services.yml```
+```
+cp ./settings/dev.services.yml ./web/sites/dev.services.yml
+```
 
-```cp ./settings/settings.local.php ./web/sites/default/settings.local.php```
+```
+cp ./settings/settings.local.php ./web/sites/default/settings.local.php
+```
 
 2. Retirer les commentaires (#) à la fin du fichier /web/sites/default/settings.php
 
