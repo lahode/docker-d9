@@ -1,6 +1,11 @@
-#!/bin/bash
+read_var() {
+  local ENV_FILE="${2:-./.env}"
+  local VAR=$(grep $1 "$ENV_FILE" | xargs)
 
-docker rm -vf $(docker ps -a -q)
+  IFS="=" read -ra VAR <<< "$VAR"
+  echo ${VAR[1]}
+}
 
-docker rmi -f $(docker images -a -q)
+projectname=$(read_var PROJECT_NAME)
 
+docker rm -f $(docker ps -f name="${projectname}*" -a -q)

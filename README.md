@@ -236,14 +236,10 @@ Drush est un des outils CLI par défaut pour Drupal. Celui-ci se trouve dans le 
 
 ## Tout supprimer et nettoyer
 
-Attention! | Attention, ceci aura pour effet de détruire l'ensemble des images et container docker (y compris des autres projets). Utilisez ce script en dernier recours!!!
+Attention! | Attention, ceci aura pour effet de détruire l'ensemble des containers docker liés à ce projet et donc de supprimer les données contenus dans la base de données.
 :---: | :---
 
-```
-ssh delete-all.sh
-```
-
-Veillez également à effectuer une sauvegarde de votre base de données préalablement, sinon tout votre projet sera perdu.
+Il est donc préalablement recommandé d'effectuer une sauvegarde de votre base de données:
 
 ```
 mkdir backup
@@ -251,3 +247,11 @@ docker-compose exec php sh
 ./vendor/bin/drush sql-dump > ./backup/dump-$(date +'%Y%m%d-%T').sql
 exit
 ```
+
+Pour supprimer les containers, exécuter la commande suivante:
+
+```
+ssh delete-all.sh
+```
+
+N.B: Cela ne supprimera pas les images téléchargées la première fois, car il se peut que celle-ci soit utilisées par un autre projet. Si toutefois vous souhaitez supprimer l'ensemble des containers et des images dans le but de nettoyer votre ordinateur, référez à la [documentation suivante](https://docs.tibco.com/pub/mash-local/4.1.1/doc/html/docker/GUID-BD850566-5B79-4915-987E-430FC38DAAE4.html).
