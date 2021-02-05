@@ -63,7 +63,7 @@ php -d memory_limit=-1 composer.phar install
 
 ### 6. Droits d'accès
 
-Durant l'étape suivante, Drupal va vouloir créer dans le dossier web/sites/default/files un dossier "files" ainsi que le fichier de configuration "settings.php". Si vous utilisez un système tel que Linux qui est très sensible au droits, créez préalablement ces 2 fichiers avec un droit d'accès maximal. Vous pourrez toujours ajuster plus tard les droits de ces 2 fichiers, notamment settings.php qui comporte des informations d'accès à la base de données.
+Durant l'étape suivante, Drupal va vouloir créer dans le dossier web/sites/default/files un dossier "files" ainsi que le fichier de configuration "settings.php". Si vous utilisez un système tel que Linux qui est très sensible au droits, créez préalablement ces 2 éléments avec un droit d'accès maximal. Vous pourrez toujours ajuster leurs droits ultérieurement, notamment settings.php qui comporte des informations d'accès à la base de données.
 
 ```
 touch web/sites/default/settings.php
