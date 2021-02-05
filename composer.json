@@ -16,14 +16,14 @@
     ],
     "require": {
         "composer/installers": "^1.9",
-        "drupal/core-composer-scaffold": "^9",
-        "drupal/core-project-message": "^9",
-        "drupal/core-recommended": "^9"
+        "drupal/core-composer-scaffold": "^9.1",
+        "drupal/core-project-message": "^9.1",
+        "drupal/core-recommended": "^9.1"
     },
     "conflict": {
         "drupal/drupal": "*"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "config": {
         "sort-packages": true
@@ -55,6 +55,9 @@
             ],
             "web/modules/custom/{$name}": [
                 "type:drupal-custom-module"
+            ],
+            "web/profiles/custom/{$name}": [
+                "type:drupal-custom-profile"
             ],
             "web/themes/custom/{$name}": [
                 "type:drupal-custom-theme"

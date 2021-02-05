@@ -27,7 +27,7 @@ Il est essentiel que les noms des containers (basé sur PROJECT_NAME) et que le 
 
 ### 3. Lancer le container Docker
 
-Dans la racine de votre projet, lancer la commande suivante.
+A la racine de votre projet, lancer la commande suivante.
 
 ```
 docker-compose up -d
