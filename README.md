@@ -2,7 +2,44 @@
 
 Cette solution s'appuie sur [docker4drupal](https://github.com/wodby/docker4drupal).
 
-## Installez Drupal avec composer
+## Pré-requis
+
+1. Installer préalablement [Docker](https://www.docker.com) sur votre ordinateur.
+2. Disposer de GIT (ou télécharger simplement le zip du projet)
+
+## Installation
+
+### 1. Récupérer le projet sur votre console à l'aide de GIT
+
+```
+git clone https://github.com/lahode/docker-d9.git
+```
+
+### 2. Configurer les variables d'environnement de votre projet
+
+Cette étape est indispensable si vous souhaitez l'utiliser plus d'une fois sur votre ordinateur. Pour cela, ouvrez le fichier .env dans votre projet et modifier les valeurs suivantes:
+
+- PROJECT_NAME
+- PROJECT_BASE_URL
+- PROJECT_PORT
+
+Il est essentiel que les noms des containers (basé sur PROJECT_NAME) et que le numéro de port configuré (PROJECT_PORT) ne soit pas déjà utilisé par un autre projet. De préférence, utilisez un numéro de port supérieur à 1000 en [évitant ceux communément utilisé](https://fr.wikipedia.org/wiki/Port_(logiciel)#:~:text=les%20num%C3%A9ros%20de%20port%20de,)%2C%20assign%C3%A9s%20par%20l'IANA).
+
+### 3. Lancer le container Docker
+
+```
+docker-compose up -d
+```
+
+### 4. Connectez-vous à votre docker
+
+Pour cela connectez-vous en SSH pour aller à l'intérieur de votre docker
+
+```
+docker-compose exec php sh
+```
+
+### 5. Lancer le téléchargement de Drupal et ses dépendances avec composer
 
 ```
 php composer.phar install
@@ -14,33 +51,40 @@ Si un message tel que celui-ci apparaît: PHP Fatal error:  Allowed memory size 
 php -d memory_limit=-1 composer.phar install 
 ```
 
-## Configurez votre environnement
+### 6. Installer Drupal via votre navigateur
 
-Avant de lancer le docker, configurer les variables d'environnement de votre projet dans le fichier .env, soit:
+1. Référez-vous aux configurations précédentes de votre fichier .env en incluant https://PROJECT_NAME:PROJECT_PORT
 
-- PROJECT_NAME
-- PROJECT_BASE_URL
-- PROJECT_PORT
-
-Cela vous permettra notamment de lancer plusieurs projets à la fois
-
-## Lancer le container Drupal
-
-```
-docker-compose up -d
-```
-
-## Ouvrez Drupal sur votre navigateur à l'adresse suivante
+Par défaut, les valeurs sont:
 
 ```
 http://drupal.localhost:8000
 ```
 
-## Configurez les accès à la base de données
+2. Dès lors vous devriez accéder à l'écran d'installation de Drupal. Suivez le formulaire d'installation.
+
+3. Lorsque vous devez insérer les accès vers la base de données, utilisez ceux indiquer dans le fichier .env: DB_NAME, DB_USER, DB_PASSWORD, DB_HOST
+
+Par défaut, utilisez les informations suivantes:
 
 ![Alt text](install-drupal.png?raw=true "Configuration de la base de données")
 
-## Pour installer un module ou un theme
+
+## Ce qu'il faut retenir pour Docker
+
+Lorsque vous utilisez une commande "composer" ou "drush", il vous faut préalablement accéder à votre docker en SSH en utilisant la commande suivante:
+
+```
+docker-compose exec php sh
+```
+
+Pour quitter votre connexion SSH, tapez:
+
+```
+exit
+```
+
+## Installation d'un un module ou un theme avec composer
 
 ```
 php composer.phar require drupal/[modulename_or_themename]
@@ -49,7 +93,6 @@ php composer.phar require drupal/[modulename_or_themename]
 ## Utilisez drush
 
 ```
-docker-compose exec php sh
 ./vendor/bin/drush
 ```
 
@@ -99,7 +142,7 @@ Et remplacer la valeur de ```$settings['config_sync_directory']``` par ```$setti
 ./vendor/bin/drush cim
 ```
  
-## Sauvegarder l'ensemble de votre projet sur un nouveau repository
+## Sauvegarder l'ensemble de votre projet sur un nouveau repository GIT
 
 1. Allez à la racine de votre projet et supprimer le dossier .git : ```rm -rf .git```
 2. Connectez-vous à docker : ```docker-compose exec php sh```
@@ -115,14 +158,14 @@ Et remplacer la valeur de ```$settings['config_sync_directory']``` par ```$setti
 
 ## Tout supprimer et nettoyer
 
-Attention! | Attention, ceci aura pour effet de détruire l'ensemble des images et container docker (y compris des autres projets).
+Attention! | Attention, ceci aura pour effet de détruire l'ensemble des images et container docker (y compris des autres projets). Utilisez ce script en dernier recours!!!
 :---: | :---
 
 ```
 ssh delete-all.sh
 ```
 
-Veillez également à effectuer une sauvegarde de votre base de données préalablement.
+Veillez également à effectuer une sauvegarde de votre base de données préalablement, sinon tout votre projet sera perdu.
 
 ```
 mkdir backup
