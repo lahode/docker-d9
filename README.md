@@ -27,9 +27,13 @@ Il est essentiel que les noms des containers (basé sur PROJECT_NAME) et que le 
 
 ### 3. Lancer le container Docker
 
+Dans la racine de votre projet, lancer la commande suivante.
+
 ```
 docker-compose up -d
 ```
+
+La 1ère fois, cela prendra un certain temps, car Docker va télécharger l'ensemble des images nécessaires à la création de vos containers (Ceux-ci sont configurés dans le fichier docker-compose.yml)
 
 Si vous obtenez une erreur (notamment sur Linux), il se peut que vous n'ayez pas les bons droits, utilisez donc la commande sudo.
 
@@ -117,13 +121,25 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 
 ## Ce qu'il faut retenir pour Docker
 
-Lorsque vous utilisez une commande "composer" ou "drush", il vous faut préalablement accéder à votre docker en SSH en utilisant la commande suivante:
+1. A chaque fois que vous redémarrer votre ordinateur, il vous faudra relancer docker à la racine de votre projet. Ceci est également valable si vous changer la configuration de votre docker dans le fichier .env ou docker-compose.yml
+
+```
+docker-compose up -d
+```
+
+2. Si vous avez besoin d'arrêter les containers (Ceci ne supprimera pas votre projet ou la base de données)
+
+```
+docker-compose down
+```
+
+2. Lorsque vous utilisez une commande "composer" ou "drush", il vous faut préalablement accéder à votre docker en SSH en utilisant la commande suivante:
 
 ```
 docker-compose exec php sh
 ```
 
-Pour quitter votre connexion SSH, tapez:
+3. Pour quitter votre connexion SSH, tapez:
 
 ```
 exit
