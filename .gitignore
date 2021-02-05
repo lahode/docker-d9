@@ -29,3 +29,5 @@ web/.htaccess
 web/robots.txt
 console
 mutagen.yml.lock
+
+/backup
