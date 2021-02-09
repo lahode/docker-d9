@@ -236,13 +236,13 @@ Drush est un des outils CLI par défaut pour Drupal. Celui-ci se trouve dans le 
 
 ## Utiliser SCSS dans votre thème
 
+Cette procédure vous permet de compiler et minifier les fichiers SCSS et JS de votre thème suivants:
+- assets/scss/style.scss => build/css/style.css
+- assets/js/script.js => build/js/script.js
+
 ### Installer NVM
 
 Si le thème que vous utilisez ne possède pas de compilateur SCSS, procédez comme suit.
-
-Les modules qui seront installé permettront de compiler et minifier le code SCSS et JS situé les dossiers suivants de votre thème:
-- assets/scss/style.scss => build/css/style.css
-- assets/js/script.js => build/js/script.js
 
 Au préalable, vérifiez si npm est déjà installé en tapant ```npm -v```, sinon rendez-vous sur la [page d'installation nvm](https://github.com/nvm-sh/nvm) pour installer une version de [nodejs](https://nodejs.org). Je recommenderai la LTS.
 Exemple: Pour installer la version 14 de nodejs une fois installé:
