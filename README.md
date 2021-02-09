@@ -234,6 +234,48 @@ Drush est un des outils CLI par défaut pour Drupal. Celui-ci se trouve dans le 
 11. Tapez les instructions indiquées dans la rubrique "…or push an existing repository from the command line", soit les 3 lignes (git remote, branch et push) sur votre terminal (toujours à la racine de votre projet)
 
 
+## Utiliser SCSS dans votre thème
+
+### Installer NVM
+
+Si le thème que vous utilisez ne possède pas de compilateur SCSS, procédez comme suit.
+
+Les modules qui seront installé permettront de compiler et minifier le code SCSS et JS situé les dossiers suivants de votre thème:
+- assets/scss/style.scss => build/css/style.css
+- assets/js/script.js => build/js/script.js
+
+Au préalable, vérifiez si npm est déjà installé en tapant ```npm -v```, sinon rendez-vous sur la [page d'installation nvm](https://github.com/nvm-sh/nvm) pour installer une version de [nodejs](https://nodejs.org). Je recommenderai la LTS.
+Exemple: Pour installer la version 14 de nodejs une fois installé:
+
+```
+nvm install v14
+```
+
+### Installer les dépendances et configurez le chemin de votre thème
+
+Installer ensuite toutes les dépendances définies dans package.json:
+
+```
+npm i
+```
+
+Modifiez ensuite la valeur ```PROJECT_THEMEPATH=htdocs/themes/custom/mytheme``` dans le fichier .env par le chemin relatif où se situe votre thème. 
+
+### Lancer le compilateur 
+
+Il ne vous reste plus qu'à taper, si vous travaillez êtes sur votre environnement de développement et que vous souhaitez le hotreload du CSS (recompile à chaque fois qu'un fichier est modifié):
+
+```
+npm run dev
+```
+
+Si vous souhaitez compiler pour la production, afin d'optimisez vos fichiers JS et CSS
+
+```
+npm run prod
+```
+
+
 ## Tout supprimer et nettoyer
 
 Attention! | Attention, ceci aura pour effet de détruire l'ensemble des containers docker liés à ce projet et donc de supprimer les données contenus dans la base de données.
