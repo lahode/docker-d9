@@ -2,10 +2,14 @@
 
 Cette solution s'appuie sur [docker4drupal](https://github.com/wodby/docker4drupal).
 
+-----
+
 ## Pré-requis
 
 1. Installer préalablement [Docker](https://www.docker.com) sur votre ordinateur.
 2. Disposer de GIT (ou télécharger simplement le zip du projet)
+
+-----
 
 ## Installation
 
@@ -90,6 +94,7 @@ Par défaut, utilisez les informations suivantes:
 
 ![Alt text](install-drupal.png?raw=true "Configuration de la base de données")
 
+-----
 
 ## Quelques configurations utiles avant de commencer
 
@@ -133,6 +138,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 }
 ```
 
+-----
 
 ## Ce qu'il faut retenir pour Docker
 
@@ -160,6 +166,7 @@ docker-compose exec php sh
 exit
 ```
 
+-----
 
 ## Utilisez composer
 
@@ -192,6 +199,7 @@ php composer.phar require drupal/[nomdumodule_ou_nomdutheme]
 php composer.phar remove drupal/[nomdumodule_ou_nomdutheme]
 ```
 
+-----
 
 ## Utilisez drush
 
@@ -218,8 +226,30 @@ Drush est un des outils CLI par défaut pour Drupal. Celui-ci se trouve dans le 
 ```
 ./vendor/bin/drush cim
 ```
- 
-## Sauvegarder l'ensemble de votre projet sur un nouveau repository GIT
+
+### Sauvegarder votre base de donnée vers un fichier SQL
+
+```
+./vendor/bin/drush sql-dump > ./backup/nom_fichier.sql
+```
+
+### Restaurer votre base données à partir d'un fichier SQL
+
+```
+./vendor/bin/drush sql-cli < ./backup/nom_fichier.sql
+```
+
+### Vider votre base données
+
+Bonne pratique à réaliser avant de restaurer votre base de donnée
+
+```
+./vendor/bin/drush sql-drop
+```
+
+-----
+
+## Préparer l'ensemble de votre projet pour un nouveau repository GIT
 
 1. Allez à la racine de votre projet et supprimer le dossier .git : ```rm -rf .git```
 2. Connectez-vous à docker : ```docker-compose exec php sh```
@@ -233,12 +263,26 @@ Drush est un des outils CLI par défaut pour Drupal. Celui-ci se trouve dans le 
 10. Allez sur votre compte GitHub.com et créer un nouveau projet (mettez simplement un nom, sans accent ni espace dans Repository name et laisser le reste par défaut)
 11. Tapez les instructions indiquées dans la rubrique "…or push an existing repository from the command line", soit les 3 lignes (git remote, branch et push) sur votre terminal (toujours à la racine de votre projet)
 
+-----
 
 ## Utiliser SCSS dans votre thème
 
 Cette procédure vous permet de compiler et minifier les fichiers SCSS et JS de votre thème suivants:
 - assets/scss/style.scss => build/css/style.css
 - assets/js/script.js => build/js/script.js
+
+### Préparer votre thème
+
+Avant de procéder à la suite, voici comment devrait se présenter la structure de vos assets (fichiers SCSS, JS, images et polices)
+
+montheme
+  assets
+    fonts
+    images
+    js
+      script.js
+    scss
+      style.scss
 
 ### Installer NVM
 
@@ -275,6 +319,23 @@ Si vous souhaitez compiler pour la production, afin d'optimisez vos fichiers JS 
 npm run prod
 ```
 
+### Comment faire si je veux compiler d'autres fichiers SCSS ou JS ?
+
+Allez dans le fichier webpack.mix.js à la racine de votre projet et ajouter:
+
+Pour un fichier JS:
+
+```
+.js(process.env.PROJECT_THEMEPATH + '/assets/js/autrefichier.js', 'js')
+```
+
+Pour un fichier SCSS:
+
+```
+.sass(process.env.PROJECT_THEMEPATH + '/assets/scss/autrefichier.scss', 'css')
+```
+
+-----
 
 ## Tout supprimer et nettoyer
 
