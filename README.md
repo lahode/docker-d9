@@ -78,18 +78,7 @@ Une fois terminé, ressortez du docker
 exit
 ```
 
-### 6. Droits d'accès
-
-Durant l'étape suivante, Drupal va vouloir créer dans le dossier **web/sites/default** un dossier "files" ainsi que le fichier de configuration "settings.php". Si vous utilisez un système tel que Linux qui est très sensible au droits, créez préalablement ces 2 éléments avec un droit d'accès maximal. Vous pourrez toujours ajuster leurs droits ultérieurement, notamment settings.php qui comporte des informations d'accès à la base de données.
-
-```
-touch web/sites/default/settings.php
-chmod 0777 web/sites/default/settings.php
-mkdir web/sites/default/files
-chmod 0777 web/sites/default/files
-```
-
-### 7. Installer Drupal via votre navigateur
+### 6. Installer Drupal via votre navigateur
 
 1. Référez-vous aux configurations précédentes de votre fichier **.env** en incluant ```https://PROJECT_NAME:PROJECT_PORT``` pour accéder à l'installation de Drupal sur votre navigateur.
 
@@ -101,7 +90,14 @@ http://drupal.localhost:8000
 
 2. Dès lors, vous devriez accéder à l'écran d'installation de Drupal. Suivez le formulaire d'installation.
 
-3. Lorsque Drupal vous demandera d'insérer les accès vers la base de données, utilisez ceux indiqués dans le fichier **.env**: **DB_NAME, DB_USER, DB_PASSWORD, DB_HOST**
+3. Si un message d'erreur apparaît relatif au dossier files ou au fichier settings.php, procédez comme suit:
+
+```
+sudo chmod 0777 web/sites/default/settings.php
+sudo chmod 0777 web/sites/default/files
+```
+
+4. Lorsque Drupal vous demandera d'insérer les accès vers la base de données, utilisez ceux indiqués dans le fichier **.env**: **DB_NAME, DB_USER, DB_PASSWORD, DB_HOST**
 
 Par défaut, utilisez les informations suivantes:
 
