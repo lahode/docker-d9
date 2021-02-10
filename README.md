@@ -21,7 +21,8 @@ git clone https://github.com/lahode/docker-d9.git
 
 ### 2. Configurer les variables d'environnement de votre projet
 
-Cette étape est indispensable si vous souhaitez l'utiliser plus d'une fois sur votre ordinateur. Pour cela, créer une copie du fichier .env.example vers .env 
+Cette étape est indispensable si vous souhaitez l'utiliser plus d'une fois sur votre ordinateur.
+Pour cela, créer une copie du fichier **.env.example** vers **.env**
 
 ```
 cp .env.example .env
@@ -33,7 +34,7 @@ Et modifier les valeurs suivantes:
 - PROJECT_BASE_URL
 - PROJECT_PORT
 
-Il est essentiel que les noms des containers (basé sur PROJECT_NAME) et que le numéro de port configuré (PROJECT_PORT) ne soit pas déjà utilisé par un autre projet. De préférence, utilisez un numéro de port supérieur à 1000 en [évitant ceux communément utilisé](https://fr.wikipedia.org/wiki/Port_(logiciel)).
+Il est essentiel que les noms des containers (basé sur **PROJECT_NAME**) et que le numéro de port configuré (**PROJECT_PORT**) ne soit pas déjà utilisés par un autre projet. De préférence, utilisez un numéro de port supérieur à 1000 en [évitant ceux communément utilisé](https://fr.wikipedia.org/wiki/Port_(logiciel)).
 
 ### 3. Lancer le container Docker
 
@@ -43,9 +44,9 @@ A la racine de votre projet, lancer la commande suivante.
 docker-compose up -d
 ```
 
-La 1ère fois, cela prendra un certain temps, car Docker va télécharger l'ensemble des images nécessaires à la création de vos containers (Ceux-ci sont configurés dans le fichier docker-compose.yml)
+La 1ère fois, cela prendra un certain temps, car Docker va télécharger l'ensemble des images nécessaires à la création de vos containers (Ceux-ci sont configurés dans le fichier **docker-compose.yml**)
 
-Si vous obtenez une erreur (notamment sur Linux), il se peut que vous n'ayez pas les bons droits, utilisez donc la commande sudo.
+Si vous obtenez une erreur (notamment sur Linux), il se peut que vous n'ayez pas les bons droits, utilisez donc la commande **sudo**.
 
 ```
 sudo docker-compose up -d
@@ -53,7 +54,7 @@ sudo docker-compose up -d
 
 ### 4. Connectez-vous à votre docker
 
-Pour cela connectez-vous en SSH pour aller à l'intérieur de votre docker
+Pour cela connectez-vous en SSH pour entrer à l'intérieur de votre docker
 
 ```
 docker-compose exec php sh
@@ -65,7 +66,7 @@ docker-compose exec php sh
 php composer.phar install
 ```
 
-Si un message tel que celui-ci apparaît: PHP Fatal error:  Allowed memory size of.... utilisez la commande:
+Si un message tel que celui-ci apparaît: PHP Fatal error:  Allowed memory size of.... utilisez la commande pour allouer plus de mémoire à PHP:
 
 ```
 php -d memory_limit=-1 composer.phar install 
@@ -73,7 +74,7 @@ php -d memory_limit=-1 composer.phar install
 
 ### 6. Droits d'accès
 
-Durant l'étape suivante, Drupal va vouloir créer dans le dossier web/sites/default/files un dossier "files" ainsi que le fichier de configuration "settings.php". Si vous utilisez un système tel que Linux qui est très sensible au droits, créez préalablement ces 2 éléments avec un droit d'accès maximal. Vous pourrez toujours ajuster leurs droits ultérieurement, notamment settings.php qui comporte des informations d'accès à la base de données.
+Durant l'étape suivante, Drupal va vouloir créer dans le dossier **web/sites/default** un dossier "files" ainsi que le fichier de configuration "settings.php". Si vous utilisez un système tel que Linux qui est très sensible au droits, créez préalablement ces 2 éléments avec un droit d'accès maximal. Vous pourrez toujours ajuster leurs droits ultérieurement, notamment settings.php qui comporte des informations d'accès à la base de données.
 
 ```
 touch web/sites/default/settings.php
@@ -84,7 +85,7 @@ chmod 0777 web/sites/default/files
 
 ### 7. Installer Drupal via votre navigateur
 
-1. Référez-vous aux configurations précédentes de votre fichier .env en incluant https://PROJECT_NAME:PROJECT_PORT
+1. Référez-vous aux configurations précédentes de votre fichier **.env** en incluant ```https://PROJECT_NAME:PROJECT_PORT``` pour accéder à l'installation de Drupal sur votre navigateur.
 
 Par défaut, les valeurs sont:
 
@@ -94,11 +95,13 @@ http://drupal.localhost:8000
 
 2. Dès lors, vous devriez accéder à l'écran d'installation de Drupal. Suivez le formulaire d'installation.
 
-3. Lorsque vous devez insérer les accès vers la base de données, utilisez ceux indiqués dans le fichier .env: DB_NAME, DB_USER, DB_PASSWORD, DB_HOST
+3. Lorsque Drupal vous demandera d'insérer les accès vers la base de données, utilisez ceux indiqués dans le fichier **.env**: **DB_NAME, DB_USER, DB_PASSWORD, DB_HOST**
 
 Par défaut, utilisez les informations suivantes:
 
 ![Alt text](install-drupal.png?raw=true "Configuration de la base de données")
+
+*N.B: Ces informations seront inscrite dans le fichier /web/sites/default/settings.php*
 
 -----
 
@@ -112,7 +115,7 @@ Ce dossier sera utile pour conserver vos sauvegarde de base de données et des m
 mkdir backup
 ```
 
-N.B. Pour information: Pour des raisons de confidentialité, il est recommandé de ne pas pousser dans le repository vos dump de base de données et autres fichiers liés à votre contenu. C'est pour cette raison que /backup a été rajouté dans le fichier .gitignore à la racine de votre projet.
+*N.B. Pour information: Pour des raisons de confidentialité, il est recommandé de ne pas pousser dans le repository vos dump de base de données et autres fichiers liés à votre contenu. C'est pour cette raison que /backup a été rajouté dans le fichier .gitignore à la racine de votre projet.*
 
 ### Modifier le chemin où sont stockés les fichiers de configuration
 
@@ -148,7 +151,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 
 ## Ce qu'il faut retenir pour Docker
 
-1. A chaque fois que vous redémarrer votre ordinateur, il vous faudra relancer docker à la racine de votre projet. Ceci est également valable si vous changer la configuration de votre docker dans le fichier .env ou docker-compose.yml
+1. A chaque fois que vous redémarrez votre ordinateur, il vous faudra relancer docker à la racine de votre projet. Ceci est également valable si vous changer la configuration de votre docker dans le fichier **.env** ou **docker-compose.yml**
 
 ```
 docker-compose up -d
@@ -160,7 +163,7 @@ docker-compose up -d
 docker-compose down
 ```
 
-2. Lorsque vous utilisez une commande "composer" ou "drush", il vous faut préalablement accéder à votre docker en SSH en utilisant la commande suivante:
+2. Lorsque vous utilisez une commande "**composer**" ou "**drush**", il vous faut préalablement accéder à votre docker en SSH en utilisant la commande suivante:
 
 ```
 docker-compose exec php sh
@@ -176,7 +179,7 @@ exit
 
 ## Utilisez composer
 
-Composer est le gestionnaire de dépendances par défaut de PHP (comme npm l'est pour Javascript).
+Composer est le gestionnaire de dépendances par défaut de PHP (comme **npm** l'est pour Javascript).
 On l'utilise pour Drupal, notamment pour:
 
 1. Installer Drupal
@@ -192,7 +195,10 @@ php composer.phar update
 ```
 
 3. Installer un nouveau module ou un theme de la communauté
-(nomdumodule ou nomdutheme est le nom que vous trouvez dans l'url après https://www.drupal.org/project/. Exemple: Pour le module (token)[https://www.drupal.org/project/token], le nomdumodule est tout simplement: token)
+
+(nomdumodule ou nomdutheme est le nom que vous trouvez dans l'url après https://www.drupal.org/project/. 
+
+Exemple: Pour le module (token)[https://www.drupal.org/project/token], le nomdumodule est tout simplement: token)
 
 ```
 php composer.phar require drupal/[nomdumodule_ou_nomdutheme]
@@ -209,13 +215,15 @@ php composer.phar remove drupal/[nomdumodule_ou_nomdutheme]
 
 ## Utilisez drush
 
-Drush est un des outils CLI par défaut pour Drupal. Celui-ci se trouve dans le dossier /vendor/bin de votre projet et est installé par également par composer.
+Drush est un des outils CLI par défaut pour Drupal. Celui-ci est installé par **composer** et se trouve dans le dossier **/vendor/bin** de votre projet.
 
 ```
 ./vendor/bin/drush
 ```
 
-### Vider le cache avec Drush
+### Vider le cache de Drupal avec Drush
+
+Cette opération est à réaliser fréquemment. Même si vous avez désactivé le cache pour le développement (voir plus haut), il y a parfois des éléments qui reste dans le cache. Par exemple, lorsque vous modifiez un fichier **.yml**, il est obligatoire de vider le cache pour que celui-ci soit pris en compte.
 
 ```
 ./vendor/bin/drush cr
@@ -273,7 +281,7 @@ Bonne pratique à réaliser avant de restaurer votre base de donnée
 
 ## Utiliser SCSS dans votre thème
 
-Cette procédure vous permet de compiler et minifier les fichiers SCSS et JS de votre thème suivants:
+Cette procédure vous permet de compiler et minifier les fichiers **SCSS** et **JS** de votre thème suivants:
 - assets/scss/style.scss => build/css/style.css
 - assets/js/script.js => build/js/script.js
 
@@ -281,20 +289,20 @@ Cette procédure vous permet de compiler et minifier les fichiers SCSS et JS de 
 
 Avant de procéder à la suite, voici comment devrait se présenter la structure de vos assets (fichiers SCSS, JS, images et polices)
 
-montheme
-  assets
-    fonts
-    images
-    js
-      script.js
-    scss
-      style.scss
+- montheme
+  - assets
+    - fonts
+    - images
+    - js
+      - script.js
+    - scss
+      - style.scss
 
 ### Installer NVM
 
 Si le thème que vous utilisez ne possède pas de compilateur SCSS, procédez comme suit.
 
-Au préalable, vérifiez si npm est déjà installé en tapant ```npm -v```, sinon rendez-vous sur la [page d'installation nvm](https://github.com/nvm-sh/nvm) pour installer une version de [nodejs](https://nodejs.org). Je recommenderai la LTS.
+Au préalable, vérifiez avant tout si **npm** est déjà installé en tapant ```npm -v```. Sinon rendez-vous sur la [page d'installation nvm](https://github.com/nvm-sh/nvm) pour installer une version de [nodejs](https://nodejs.org). Je recommenderai la version LTS de NodeJS.
 Exemple: Pour installer la version 14 de nodejs une fois installé:
 
 ```
@@ -309,11 +317,11 @@ Installer ensuite toutes les dépendances définies dans package.json:
 npm i
 ```
 
-Modifiez ensuite la valeur ```PROJECT_THEMEPATH=htdocs/themes/custom/mytheme``` dans le fichier .env par le chemin relatif où se situe votre thème. 
+Modifiez ensuite la valeur ```PROJECT_THEMEPATH=web/themes/custom/mytheme``` dans le fichier .env par le chemin relatif où se situe votre thème. 
 
 ### Lancer le compilateur 
 
-Il ne vous reste plus qu'à taper, si vous travaillez êtes sur votre environnement de développement et que vous souhaitez le hotreload du CSS (recompile à chaque fois qu'un fichier est modifié):
+Si vous travaillez êtes sur votre environnement de développement et que vous souhaitez le fonction "Hot Reload" (recompile à chaque fois qu'un fichier est modifié et rafraîchi votre site sur une adresse de type localhost:3000):
 
 ```
 npm run dev
@@ -327,7 +335,7 @@ npm run prod
 
 ### Comment faire si je veux compiler d'autres fichiers SCSS ou JS ?
 
-Allez dans le fichier webpack.mix.js à la racine de votre projet et ajouter:
+Allez à la ligne 38 dans le fichier **webpack.mix.js** à la racine de votre projet et ajoutez:
 
 Pour un fichier JS:
 
