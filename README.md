@@ -21,7 +21,13 @@ git clone https://github.com/lahode/docker-d9.git
 
 ### 2. Configurer les variables d'environnement de votre projet
 
-Cette étape est indispensable si vous souhaitez l'utiliser plus d'une fois sur votre ordinateur. Pour cela, ouvrez le fichier .env dans votre projet et modifier les valeurs suivantes:
+Cette étape est indispensable si vous souhaitez l'utiliser plus d'une fois sur votre ordinateur. Pour cela, créer une copie du fichier .env.example vers .env 
+
+```
+cp .env.example .env
+```
+
+Et modifier les valeurs suivantes:
 
 - PROJECT_NAME
 - PROJECT_BASE_URL

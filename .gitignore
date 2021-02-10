@@ -33,3 +33,4 @@ mutagen.yml.lock
 /backup
 /.editorconfig
 /.gitattributes
+/.env
