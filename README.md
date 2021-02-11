@@ -22,7 +22,8 @@ git clone https://github.com/lahode/docker-d9.git
 ### 2. Configurer les variables d'environnement de votre projet
 
 Cette étape est indispensable si vous souhaitez l'utiliser plus d'une fois sur votre ordinateur.
-Pour cela, créer une copie du fichier **.env.example** vers **.env**
+
+Pour cela, créer une copie du fichier **.env.example** en **.env**
 
 ```
 cp .env.example .env
@@ -88,22 +89,45 @@ Par défaut, les valeurs sont:
 http://drupal.localhost:8000
 ```
 
-2. Dès lors, vous devriez accéder à l'écran d'installation de Drupal. Suivez le formulaire d'installation.
+2. Dès lors, vous devriez accéder à l'écran d'installation de Drupal en 6 étapes à commencer la langue par défaut dans laquelle vous souhaitez installer Drupal.
 
-3. Si un message d'erreur apparaît relatif au dossier files ou au fichier settings.php, procédez comme suit:
+3. A la 2ème étape, choisissez le profil d'installation **Standard**
+
+4. A la prochaine étape, Drupal risque de vous annoncer qu'il n'arrive pas à créer le dossier **files** dans le dossier **web/sites/default**.
+
+![Alt text](docs/install-drupal-error-files.png?raw=true "Configuration de la base de données")
+
+Dans ce cas, lancer les commandes suivantes pour créer le dossier files et lui attribuer les droits d'écritures complet:
 
 ```
-sudo chmod 0777 web/sites/default/settings.php
+sudo mkdir web/sites/default/files
 sudo chmod 0777 web/sites/default/files
 ```
 
-4. Lorsque Drupal vous demandera d'insérer les accès vers la base de données, utilisez ceux indiqués dans le fichier **.env**: **DB_NAME, DB_USER, DB_PASSWORD, DB_HOST**
+5. Lorsque Drupal vous demandera d'insérer les accès vers la base de données, utilisez ceux indiqués dans le fichier **.env**: **DB_NAME, DB_USER, DB_PASSWORD, DB_HOST**
 
 Par défaut, utilisez les informations suivantes:
 
-![Alt text](install-drupal.png?raw=true "Configuration de la base de données")
+![Alt text](docs/install-drupal.png?raw=true "Configuration de la base de données")
 
-*N.B: Ces informations seront inscrite dans le fichier /web/sites/default/settings.php*
+Après avoir cliqué sur **Enregistrer et continuer**, il se peut que Drupal n'arrive pas à créer automatiquement le fichier ** settings.php ** dans lequel va figurer les informations d'accès vers la base de données que vous venez de renseigner.
+
+![Alt text](docs/install-drupal-error-settings.png?raw=true "Configuration de la base de données")
+
+Dans ce cas, taper les commandes suivantes pour copier le fichier d'installation d'exemple et donnez lui les droits d'écriture, le temps de l'installation
+
+```
+sudo cp web/sites/default/default.settings.php web/sites/default/settings.php
+sudo chmod 0777 web/sites/default/settings.php
+```
+
+6. Continuer ensuite les étapes du formulaires en renseigner un nom d'utilisateur, un mail pour récupérer votre mot de passe, etc. jusqu'à ce que vous ayez terminé l'installation.
+
+Si vous avez précédemment dû copier manuellement le fichier **settings.php**, remettez les droits de lecture unique pour des raisons de sécurité.
+
+```
+sudo chmod 0444 web/sites/default/settings.php
+```
 
 -----
 
