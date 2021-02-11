@@ -110,7 +110,7 @@ Par défaut, utilisez les informations suivantes:
 
 ![Alt text](docs/install-drupal.png?raw=true "Configuration de la base de données")
 
-Après avoir cliqué sur **Enregistrer et continuer**, il se peut que Drupal n'arrive pas à créer automatiquement le fichier ** settings.php ** dans lequel va figurer les informations d'accès vers la base de données que vous venez de renseigner.
+Après avoir cliqué sur **Enregistrer et continuer**, il se peut que Drupal n'arrive pas à créer automatiquement le fichier **settings.php** dans lequel va figurer les informations d'accès vers la base de données que vous venez de renseigner.
 
 ![Alt text](docs/install-drupal-error-settings.png?raw=true "Configuration de la base de données")
 
@@ -285,6 +285,14 @@ Bonne pratique à réaliser avant de restaurer votre base de donnée
 
 ```
 ./vendor/bin/drush sql-drop
+```
+
+### Accéder à votre site en super admin
+
+Bonne pratique si vous avez oublié votre mot de passe
+
+```
+./vendor/bin/drush uli
 ```
 
 -----
