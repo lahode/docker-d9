@@ -300,8 +300,8 @@ Bonne pratique si vous avez oublié votre mot de passe
 ## Préparer l'ensemble de votre projet pour un nouveau repository GIT
 
 1. Allez à la racine de votre projet et supprimer le dossier .git : ```rm -rf .git```
-2. Connectez-vous à docker : ```docker-compose exec php sh```
-3. Vérifier que vous avez bien créé le dossier *backup* préalablement, sinon créez le ```mkdir backup```
+2. Vérifier que vous avez bien créé le dossier *backup* préalablement, sinon créez le ```mkdir backup```
+3. Connectez-vous à docker : ```docker-compose exec php sh```
 4. Videz le cache de Drupal (Bonne pratique avant de faire des sauvegarde de la base de données): ```./vendor/bin/drush cr```
 5. Faite une sauvegarde de la base de données à la racine du projet : ```./vendor/bin/drush sql-dump > ./backup/initial-backup.sql```
 6. Exportez les fichier de configuration : ```./vendor/bin/drush cex```
