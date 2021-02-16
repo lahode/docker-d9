@@ -165,7 +165,7 @@ cp ./settings/dev.services.yml ./web/sites/dev.services.yml
 sudo cp ./settings/settings.local.php ./web/sites/default/settings.local.php
 ```
 
-2. Retirer les commentaires (#) à la fin du fichier /web/sites/default/settings.php
+2. Retirer les commentaires (#) à la fin du fichier */web/sites/default/settings.php*
 
 ```
 if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
@@ -301,15 +301,17 @@ Bonne pratique si vous avez oublié votre mot de passe
 
 1. Allez à la racine de votre projet et supprimer le dossier .git : ```rm -rf .git```
 2. Connectez-vous à docker : ```docker-compose exec php sh```
-3. Faite une sauvegarde de la base de données à la racine du projet : ```./vendor/bin/drush sql-dump > ./sauvegarde-db-20201116.sql```
-4. Exportez les fichier de configuration : ```./vendor/bin/drush cex```
-5. Sortez de docker : ```exit```
-6. Sauvegarder vos fichiers média : ```tar czvf files.tar.gz web/sites/default/files```
-7. Créez un nouveau repository git : ```git init```
-8. Ajouter l'ensemble de vos fichier : ```git add .```
-9. Committez l'ensemble pour créer un nouvel historique sur votre machine : ```git commit -m "Mon projet Drupal"```
-10. Allez sur votre compte GitHub.com et créer un nouveau projet (mettez simplement un nom, sans accent ni espace dans Repository name et laisser le reste par défaut)
-11. Tapez les instructions indiquées dans la rubrique "…or push an existing repository from the command line", soit les 3 lignes (git remote, branch et push) sur votre terminal (toujours à la racine de votre projet)
+3. Vérifier que vous avez bien créé le dossier *backup* préalablement, sinon créez le ```mkdir backup```
+4. Videz le cache de Drupal (Bonne pratique avant de faire des sauvegarde de la base de données): ```./vendor/bin/drush cr```
+5. Faite une sauvegarde de la base de données à la racine du projet : ```./vendor/bin/drush sql-dump > ./backup/initial-backup.sql```
+6. Exportez les fichier de configuration : ```./vendor/bin/drush cex```
+7. Sortez de docker : ```exit```
+8. Sauvegarder vos fichiers média : ```tar czvf ./backup/files.tar.gz -C web/sites/default files```
+9. Créez un nouveau repository git : ```git init```
+10. Ajouter l'ensemble de vos fichier : ```git add .```
+11. Committez l'ensemble pour créer un nouvel historique sur votre machine : ```git commit -m "Mon projet Drupal"```
+12. Allez sur votre compte GitHub.com et créer un nouveau projet (mettez simplement un nom, sans accent ni espace dans Repository name et laisser le reste par défaut)
+13. Tapez les instructions indiquées dans la rubrique "…or push an existing repository from the command line", soit les 3 lignes (git remote, branch et push) sur votre terminal (toujours à la racine de votre projet)
 
 -----
 
